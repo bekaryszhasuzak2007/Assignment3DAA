@@ -17,17 +17,22 @@ public class Prim {
         );
 
         long totalWeight = 0;
-        int start = 0;
+        long operations = 0;
 
         if (vertices == 0) {
-            return new Kruskal.Result(mst, 0, true);
+            return new Kruskal.Result(mst, 0, true, 0);
         }
 
-        visited[start] = true;
-        queue.addAll(graph.getNeighbors(start));
+        visited[0] = true;
+
+        for (Graph.Edge edge : graph.getNeighbors(0)) {
+            queue.add(edge);
+            operations++;
+        }
 
         while (!queue.isEmpty() && mst.size() < vertices - 1) {
             Graph.Edge edge = queue.poll();
+            operations++;
 
             if (visited[edge.to]) {
                 continue;
@@ -38,6 +43,8 @@ public class Prim {
             totalWeight += edge.weight;
 
             for (Graph.Edge next : graph.getNeighbors(edge.to)) {
+                operations++;
+
                 if (!visited[next.to]) {
                     queue.add(next);
                 }
@@ -46,6 +53,6 @@ public class Prim {
 
         boolean connected = mst.size() == vertices - 1;
 
-        return new Kruskal.Result(mst, totalWeight, connected);
+        return new Kruskal.Result(mst, totalWeight, connected, operations);
     }
 }

@@ -4,10 +4,12 @@ package dsu;
 public class DSU {
     private final int[] parent;
     private final int[] size;
+    private long operations;
 
     public DSU(int n) {
         parent = new int[n];
         size = new int[n];
+        operations = 0;
 
         for (int i = 0; i < n; i++) {
             parent[i] = i;
@@ -16,9 +18,12 @@ public class DSU {
     }
 
     public int find(int x) {
+        operations++;
+
         if (parent[x] != x) {
             parent[x] = find(parent[x]);
         }
+
         return parent[x];
     }
 
@@ -38,7 +43,12 @@ public class DSU {
 
         parent[rootB] = rootA;
         size[rootA] += size[rootB];
+        operations++;
 
         return true;
+    }
+
+    public long getOperations() {
+        return operations;
     }
 }

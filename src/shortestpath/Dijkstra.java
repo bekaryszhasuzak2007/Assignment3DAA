@@ -13,16 +13,19 @@ public class Dijkstra {
     public static class Result {
         public final long[] distances;
         public final int[] previous;
+        public final long operations;
 
-        public Result(long[] distances, int[] previous) {
+        public Result(long[] distances, int[] previous, long operations) {
             this.distances = distances;
             this.previous = previous;
+            this.operations = operations;
         }
 
         public List<Integer> getPath(int target) {
             List<Integer> path = new ArrayList<>();
 
-            if (distances[target] == Long.MAX_VALUE) {
+            if (target < 0 || target >= distances.length
+                    || distances[target] == Long.MAX_VALUE) {
                 return path;
             }
 
@@ -62,19 +65,25 @@ public class Dijkstra {
                 (a, b) -> Long.compare(a.distance, b.distance)
         );
 
+        long operations = 0;
         distances[source] = 0;
         queue.add(new Node(source, 0));
 
         while (!queue.isEmpty()) {
             Node current = queue.poll();
+            operations++;
 
             if (current.distance != distances[current.vertex]) {
                 continue;
             }
 
             for (Graph.Edge edge : graph.getNeighbors(current.vertex)) {
+                operations++;
+
                 if (edge.weight < 0) {
-                    throw new IllegalArgumentException("Negative weights are not supported");
+                    throw new IllegalArgumentException(
+                            "Negative weights are not supported"
+                    );
                 }
 
                 long newDistance = current.distance + edge.weight;
@@ -87,6 +96,6 @@ public class Dijkstra {
             }
         }
 
-        return new Result(distances, previous);
+        return new Result(distances, previous, operations);
     }
 }
