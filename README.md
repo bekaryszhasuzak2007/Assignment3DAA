@@ -138,7 +138,25 @@ The CSV file stores:
 
 The project compares Kruskal and Prim, and measures Dijkstra, SCC, and topological sorting on different graphs.
 
-## 6. Time and Space Complexity
+## 6. Experimental Results
+
+### Execution Time vs Number of Vertices
+
+This graph compares the execution time of the algorithms for different numbers of vertices.
+
+![Execution Time vs Number of Vertices](results/plots/execution_time_vs_vertices.png)
+
+### Execution Time vs Number of Edges
+
+This graph compares the execution time of the algorithms for different numbers of edges.
+
+![Execution Time vs Number of Edges](results/plots/execution_time_vs_edges.png)
+
+The experiments use three graph sizes: 10, 100, and 1000 vertices. Each experiment runs five times, and the average execution time is saved in `results/results.csv`.
+
+
+
+## 7. Time and Space Complexity
 
 Let `V` be the number of vertices and `E` be the number of edges.
 
@@ -151,7 +169,7 @@ Let `V` be the number of vertices and `E` be the number of edges.
 | Kosaraju's SCC | O(V + E) | O(V + E) |
 | Dijkstra with a priority queue | O((V + E) log V) | O(V + E) |
 
-## 7. Tests
+## 8. Tests
 
 `GraphTests.java` checks important cases, including:
 
@@ -164,7 +182,7 @@ Let `V` be the number of vertices and `E` be the number of edges.
 
 The tests passed during project development.
 
-## 8. Conclusion
+## 9. Conclusion
 
 This project demonstrates how graph algorithms can solve problems related to smart city infrastructure and route planning.
 
